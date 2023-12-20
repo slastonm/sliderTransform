@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+
+    
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <style>
+        .slider-wrapper{
+            display: flex;
+        }
+        .slick-slider{
+            width: 500px;
+            margin: 0 auto;
+        }
+    </style>
+                    
+</head>
+<body>
+    <div class="slider-wrapper">
+        <div class="left-column">
+            <div class="content-item">
+                Content
+            </div>
+        </div>
+        <div class="right-column">
+            <div class="content-item">Content2</div>
+            <div class="content-item">Content3</div>
+            <div class="content-item">Content4</div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            // Зберігаємо початковий стан колонок
+            var originalLeftColumn = $('.left-column').html();
+            var originalRightColumn = $('.right-column').html();
+            // Функція для ініціалізації Slick Slider
+            function initSlider() {
+                // Переміщення усіх елементів до right-column
+                $('.left-column .content-item').appendTo('.right-column');
+        
+                // Ініціалізація Slick Slider
+                $('.right-column').slick({
+                    // параметри Slick Slider
+                });
+            }
+            // Функція для знищення Slick Slider та повернення елементів
+            function destroySlider() {
+                if ($('.right-column').hasClass('slick-initialized')) {
+                    // Деактивація Slick Slider
+                    $('.right-column').slick('unslick');
+                }
+                // Відновлення початкового стану колонок
+                $('.left-column').html(originalLeftColumn);
+                $('.right-column').html(originalRightColumn);
+            }
+            // Перевірка ширини вікна та ініціалізація/деактивація слайдера
+            function checkWidth() {
+                const windowWidth = $(window).width();
+        
+                if (windowWidth < 800) {
+                    if (!$('.right-column').hasClass('slick-initialized')) {
+                        initSlider();
+                    }
+                } else {
+                    destroySlider();
+                }
+            }
+            // Виклик при завантаженні та зміні розміру вікна
+            checkWidth();
+            $(window).resize(checkWidth);
+        });
+        </script>
+        
+
+</body>
+</html>
